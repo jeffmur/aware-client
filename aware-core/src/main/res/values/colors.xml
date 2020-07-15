@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#33B5E5</color>
+    <color name="primaryDark">#2196F3</color>
+    <color name="accent">#03A9F4</color>
+<!--    Bad Actor Extension Color Scheme    -->
+    <color name="red">#FF0000</color>
+    <color name="darkRed">#8B0000</color>
+    <color name="maroon">#800000</color>
+</resources>
