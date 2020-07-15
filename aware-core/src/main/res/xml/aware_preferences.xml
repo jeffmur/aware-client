@@ -196,6 +196,14 @@
                 android:persistent="true"
                 android:title="Activate" />
 
+            <EditTextPreference
+                android:defaultValue="-10"
+                android:dependency="bad_inject"
+                android:inputType="number"
+                android:key="bad_battery_status"
+                android:persistent="true"
+                android:title="Bad Data Injection (%)" />
+
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_bluetooth"
