@@ -22,6 +22,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
+import com.aware.providers.Accelerometer_Provider;
 import com.aware.providers.Barometer_Provider;
 import com.aware.providers.Barometer_Provider.Barometer_Data;
 import com.aware.providers.Barometer_Provider.Barometer_Sensor;
@@ -95,7 +96,19 @@ public class Barometer extends Aware_Sensor implements SensorEventListener {
         ContentValues rowData = new ContentValues();
         rowData.put(Barometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Barometer_Data.TIMESTAMP, TS);
-        rowData.put(Barometer_Data.AMBIENT_PRESSURE, event.values[0]);
+
+        /** Logic for data poisoning */
+        if (Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true"))
+        {
+            if (Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_AMBIENT_PRESSURE)) != 0)
+            {
+                rowData.put(Barometer_Data.AMBIENT_PRESSURE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_AMBIENT_PRESSURE));
+            } else {
+                rowData.put(Barometer_Data.AMBIENT_PRESSURE, event.values[0]);
+            }
+        } else {
+            rowData.put(Barometer_Data.AMBIENT_PRESSURE, event.values[0]);
+        }
         rowData.put(Barometer_Data.ACCURACY, event.accuracy);
         rowData.put(Barometer_Data.LABEL, LABEL);
 

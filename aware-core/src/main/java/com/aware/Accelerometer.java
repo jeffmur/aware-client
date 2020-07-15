@@ -125,9 +125,30 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
         ContentValues rowData = new ContentValues();
         rowData.put(Accelerometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Accelerometer_Data.TIMESTAMP, TS);
-        rowData.put(Accelerometer_Data.VALUES_0, event.values[0]);
-        rowData.put(Accelerometer_Data.VALUES_1, event.values[1]);
-        rowData.put(Accelerometer_Data.VALUES_2, event.values[2]);
+        if (Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true"))
+        {
+            if (Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS)) != 0) {
+                rowData.put(Accelerometer_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS));
+            } else {
+                rowData.put(Accelerometer_Data.VALUES_0, event.values[0]);
+            }
+
+            if (Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Y_AXIS)) != 0) {
+                rowData.put(Accelerometer_Data.VALUES_1, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Y_AXIS));
+            } else {
+                rowData.put(Accelerometer_Data.VALUES_1, event.values[1]);
+            }
+            if (Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Z_AXIS)) != 0) {
+                rowData.put(Accelerometer_Data.VALUES_2, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Z_AXIS));
+            } else {
+                rowData.put(Accelerometer_Data.VALUES_2, event.values[2]);
+            }
+        }else
+        {
+            rowData.put(Accelerometer_Data.VALUES_0, event.values[0]);
+            rowData.put(Accelerometer_Data.VALUES_1, event.values[1]);
+            rowData.put(Accelerometer_Data.VALUES_2, event.values[2]);
+        }
         rowData.put(Accelerometer_Data.ACCURACY, event.accuracy);
         rowData.put(Accelerometer_Data.LABEL, LABEL);
 
@@ -138,9 +159,15 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
                 JSONObject data = new JSONObject();
                 data.put(Accelerometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
                 data.put(Accelerometer_Data.TIMESTAMP, TS);
-                data.put(Accelerometer_Data.VALUES_0, event.values[0]);
-                data.put(Accelerometer_Data.VALUES_1, event.values[1]);
-                data.put(Accelerometer_Data.VALUES_2, event.values[2]);
+                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true")) {
+                    data.put(Accelerometer_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS));
+                    data.put(Accelerometer_Data.VALUES_1, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Y_AXIS));
+                    data.put(Accelerometer_Data.VALUES_2, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Z_AXIS));
+                } else {
+                    data.put(Accelerometer_Data.VALUES_0, event.values[0]);
+                    data.put(Accelerometer_Data.VALUES_1, event.values[1]);
+                    data.put(Accelerometer_Data.VALUES_2, event.values[2]);
+                }
                 data.put(Accelerometer_Data.ACCURACY, event.accuracy);
                 data.put(Accelerometer_Data.LABEL, LABEL);
 
@@ -188,9 +215,11 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
     }
 
     private static AWARESensorObserver awareSensor;
+
     public static void setSensorObserver(AWARESensorObserver observer) {
         awareSensor = observer;
     }
+
     public static AWARESensorObserver getSensorObserver() {
         return awareSensor;
     }
@@ -328,14 +357,15 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
                 mSensorManager.registerListener(this, mAccelerometer, Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.FREQUENCY_ACCELEROMETER)), sensorHandler);
                 LAST_SAVE = System.currentTimeMillis();
 
-                if (Aware.DEBUG) Log.d(TAG, "Accelerometer service active: " + FREQUENCY + " ms");
+                if (Aware.DEBUG)
+                    Log.d(TAG, "Accelerometer service active: " + FREQUENCY + " ms");
 
                 if (Aware.isStudy(this)) {
                     ContentResolver.setIsSyncable(Aware.getAWAREAccount(this), Accelerometer_Provider.getAuthority(this), 1);
                     ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Accelerometer_Provider.getAuthority(this), true);
                     long frequency = Long.parseLong(Aware.getSetting(this, Aware_Preferences.FREQUENCY_WEBSERVICE)) * 60;
                     SyncRequest request = new SyncRequest.Builder()
-                            .syncPeriodic(frequency, frequency/3)
+                            .syncPeriodic(frequency, frequency / 3)
                             .setSyncAdapter(Aware.getAWAREAccount(this), Accelerometer_Provider.getAuthority(this))
                             .setExtras(new Bundle()).build();
                     ContentResolver.requestSync(request);

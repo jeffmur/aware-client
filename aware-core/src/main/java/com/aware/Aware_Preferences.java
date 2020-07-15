@@ -665,4 +665,18 @@ public class Aware_Preferences {
      * Where the websocket server is located (https://domain or IP)
      */
     public static final String WEBSOCKET_SERVER = "websocket_server";
+
+    /****************************************************************************************
+     *Preferences for bad actor fork
+     ****************************************************************************************/
+    /** bad actor enable */
+    public static final String STATUS_BAD_ACTOR = "bad_inject";
+
+    /** Stores bad actor input for x, y, z axis of accelerometer sensor */
+    public static final String ACCELEROMETER_VALUE_X_AXIS = "accelerometer_value_x_axis";
+    public static final String ACCELEROMETER_VALUE_Y_AXIS = "accelerometer_value_y_axis";
+    public static final String ACCELEROMETER_VALUE_Z_AXIS = "accelerometer_value_z_axis";
+
+    /** Stores bad actor input for barometer sensor pressure value */
+    public static final String BAROMETER_AMBIENT_PRESSURE = "barometer_ambient_pressure";
 }

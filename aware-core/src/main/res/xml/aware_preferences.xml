@@ -84,6 +84,31 @@
                 android:persistent="true"
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="bad_inject"
+                android:inputType="numberDecimal"
+                android:key="accelerometer_value_x_axis"
+                android:persistent="true"
+                android:title="Accelerometer x-axis  (0 = disabled)" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="bad_inject"
+                android:inputType="numberDecimal"
+                android:key="accelerometer_value_y_axis"
+                android:persistent="true"
+                android:title="Accelerometer y-axis  (0 = disabled)" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="bad_inject"
+                android:inputType="numberDecimal"
+                android:key="accelerometer_value_z_axis"
+                android:persistent="true"
+                android:title="Accelerometer z-axis (0 = disabled)" />
+
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_applications"
@@ -183,6 +208,15 @@
                 android:persistent="true"
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="bad_inject"
+                android:inputType="numberDecimal"
+                android:key="barometer_ambient_pressure"
+                android:persistent="true"
+                android:title="Barometer ambient pressure (0 = disabled)" />
+
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_battery"
