@@ -677,6 +677,16 @@ public class Aware_Preferences {
     public static final String ACCELEROMETER_VALUE_Y_AXIS = "accelerometer_value_y_axis";
     public static final String ACCELEROMETER_VALUE_Z_AXIS = "accelerometer_value_z_axis";
 
+    /**         Stores bad actor input for battery measurement -> to equivalent -> Boolean Key (Question)         */
+    public static final String BATTERY_LEVEL = "battery_level"; public static final String Q_BATTERY_LEVEL = "q_battery_level";
+    public static final String BATTERY_SCALE = "battery_scale"; public static final String Q_BATTERY_SCALE = "q_battery_scale";
+    public static final String BATTERY_HEALTH = "battery_health"; public static final String Q_BATTERY_HEALTH = "q_battery_health";
+    public static final String BATTERY_STATUS = "battery_status"; public static final String Q_BATTERY_STATUS = "q_battery_status";
+    public static final String BATTERY_ADAPTOR = "battery_adaptor"; public static final String Q_BATTERY_ADAPTOR = "q_battery_adaptor";
+    public static final String BATTERY_VOLTAGE = "battery_voltage"; public static final String Q_BATTERY_VOLTAGE = "q_battery_voltage";
+    public static final String BATTERY_TECH = "battery_technology"; public static final String Q_BATTERY_TECH = "q_battery_technology";
+    public static final String BATTERY_TEMP = "battery_temperature"; public static final String Q_BATTERY_TEMP = "q_battery_temperature";
+
     /** Stores bad actor input for barometer sensor pressure value */
     public static final String BAROMETER_AMBIENT_PRESSURE = "barometer_ambient_pressure";
 }

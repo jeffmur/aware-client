@@ -16,12 +16,15 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.CheckBox;
 
 import com.aware.providers.Battery_Provider;
 import com.aware.providers.Battery_Provider.Battery_Charges;
 import com.aware.providers.Battery_Provider.Battery_Data;
 import com.aware.providers.Battery_Provider.Battery_Discharges;
 import com.aware.utils.Aware_Sensor;
+
+import java.util.Objects;
 
 /**
  * Service that logs power related events (battery and shutdown/reboot)
@@ -120,6 +123,8 @@ public class Battery extends Aware_Sensor {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            boolean badActorEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true");
+
             if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
                 Bundle extras = intent.getExtras();
                 if (extras == null) return;
@@ -133,20 +138,69 @@ public class Battery extends Aware_Sensor {
                 } else changed = true;
                 if (lastBattery != null) lastBattery.close();
 
-                if (!changed) return;
+                if (!changed && !badActorEnabled) return;
 
                 ContentValues rowData = new ContentValues();
                 rowData.put(Battery_Data.TIMESTAMP, System.currentTimeMillis());
                 rowData.put(Battery_Data.DEVICE_ID, Aware.getSetting(context, Aware_Preferences.DEVICE_ID));
-                rowData.put(Battery_Data.STATUS, extras.getInt(BatteryManager.EXTRA_STATUS));
-                rowData.put(Battery_Data.LEVEL, extras.getInt(BatteryManager.EXTRA_LEVEL));
-                rowData.put(Battery_Data.SCALE, extras.getInt(BatteryManager.EXTRA_SCALE));
-                rowData.put(Battery_Data.VOLTAGE, extras.getInt(BatteryManager.EXTRA_VOLTAGE));
-                rowData.put(Battery_Data.TEMPERATURE, extras.getInt(BatteryManager.EXTRA_TEMPERATURE) / 10);
-                rowData.put(Battery_Data.PLUG_ADAPTOR, extras.getInt(BatteryManager.EXTRA_PLUGGED));
-                rowData.put(Battery_Data.HEALTH, extras.getInt(BatteryManager.EXTRA_HEALTH));
-                rowData.put(Battery_Data.TECHNOLOGY, extras.getString(BatteryManager.EXTRA_TECHNOLOGY));
 
+                //--- BAD ACTOR NESTED CHECK ---//
+
+                if(badActorEnabled)
+                {
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_STATUS), "true"))
+                        rowData.put(Battery_Data.STATUS, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_STATUS));
+                    else
+                        rowData.put(Battery_Data.STATUS, extras.getInt(BatteryManager.EXTRA_STATUS));
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_LEVEL), "true"))
+                        rowData.put(Battery_Data.LEVEL, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_LEVEL));
+                    else
+                        rowData.put(Battery_Data.LEVEL, extras.getInt(BatteryManager.EXTRA_LEVEL));
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_SCALE), "true"))
+                        rowData.put(Battery_Data.SCALE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_SCALE));
+                    else
+                        rowData.put(Battery_Data.SCALE, extras.getInt(BatteryManager.EXTRA_SCALE));
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_VOLTAGE), "true"))
+                        rowData.put(Battery_Data.VOLTAGE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_VOLTAGE));
+                    else
+                        rowData.put(Battery_Data.VOLTAGE, extras.getInt(BatteryManager.EXTRA_VOLTAGE));
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_TEMP), "true"))
+                        rowData.put(Battery_Data.TEMPERATURE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_TEMP));
+                    else
+                        rowData.put(Battery_Data.TEMPERATURE, extras.getInt(BatteryManager.EXTRA_TEMPERATURE) / 10);
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_ADAPTOR), "true"))
+                        rowData.put(Battery_Data.PLUG_ADAPTOR, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_ADAPTOR));
+                    else
+                        rowData.put(Battery_Data.PLUG_ADAPTOR, extras.getInt(BatteryManager.EXTRA_PLUGGED));
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_HEALTH), "true"))
+                        rowData.put(Battery_Data.HEALTH, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_HEALTH));
+                    else
+                        rowData.put(Battery_Data.HEALTH, extras.getInt(BatteryManager.EXTRA_HEALTH));
+
+                    if(Objects.equals(Aware.getSetting(getApplicationContext(), Aware_Preferences.Q_BATTERY_TECH), "true"))
+                        rowData.put(Battery_Data.TECHNOLOGY, Aware.getSetting(getApplicationContext(), Aware_Preferences.BATTERY_TECH));
+                    else
+                        rowData.put(Battery_Data.TECHNOLOGY, extras.getString(BatteryManager.EXTRA_TECHNOLOGY));
+                }
+                else
+                {
+                    rowData.put(Battery_Data.STATUS, extras.getInt(BatteryManager.EXTRA_STATUS));
+                    rowData.put(Battery_Data.LEVEL, extras.getInt(BatteryManager.EXTRA_LEVEL));
+                    rowData.put(Battery_Data.SCALE, extras.getInt(BatteryManager.EXTRA_SCALE));
+                    rowData.put(Battery_Data.VOLTAGE, extras.getInt(BatteryManager.EXTRA_VOLTAGE));
+                    rowData.put(Battery_Data.TEMPERATURE, extras.getInt(BatteryManager.EXTRA_TEMPERATURE) / 10);
+                    rowData.put(Battery_Data.PLUG_ADAPTOR, extras.getInt(BatteryManager.EXTRA_PLUGGED));
+                    rowData.put(Battery_Data.HEALTH, extras.getInt(BatteryManager.EXTRA_HEALTH));
+                    rowData.put(Battery_Data.TECHNOLOGY, extras.getString(BatteryManager.EXTRA_TECHNOLOGY));
+                }
+
+                // Insert current rowData into SQLite DB
                 try {
                     context.getContentResolver().insert(Battery_Data.CONTENT_URI, rowData);
                     if (awareSensor != null) awareSensor.onBatteryChanged(rowData);

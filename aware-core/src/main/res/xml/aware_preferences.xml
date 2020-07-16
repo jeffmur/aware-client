@@ -35,7 +35,9 @@
         android:summary="data poisoning"
         android:title="Bad Actor Module">
         <CheckBoxPreference
+            android:icon="@drawable/ic_action_inject_data"
             android:defaultValue="false"
+            android:dependency=""
             android:key="bad_inject"
             android:persistent="true"
             android:summary="Used for manual entry of sensor data"
@@ -230,13 +232,134 @@
                 android:persistent="true"
                 android:title="Activate" />
 
-            <EditTextPreference
-                android:defaultValue="-10"
+            <!--BATTERY LEVEL-->
+            <CheckBoxPreference
+                android:defaultValue="false"
                 android:dependency="bad_inject"
-                android:inputType="number"
-                android:key="bad_battery_status"
+                android:key="q_battery_level"
                 android:persistent="true"
-                android:title="Bad Data Injection (%)" />
+                android:title="Inject Battery Level?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_level"
+                android:inputType="number"
+                android:key="battery_level"
+                android:persistent="true"
+                android:summary="Ex. 35 (%)"
+                android:title="Battery Level" />
+
+            <!--BATTERY SCALE-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_scale"
+                android:persistent="true"
+                android:title="Inject Battery Scale?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_scale"
+                android:inputType="number"
+                android:key="battery_scale"
+                android:persistent="true"
+                android:summary="Ex. 100 (%)"
+                android:title="Battery Scale" />
+
+            <!--BATTERY HEALTH-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_health"
+                android:persistent="true"
+                android:title="Inject Battery Health?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_health"
+                android:inputType="number"
+                android:key="battery_health"
+                android:persistent="true"
+                android:summary="Ex. 2"
+                android:title="Battery Health" />
+
+            <!--BATTERY STATUS-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_status"
+                android:persistent="true"
+                android:title="Inject Battery Status?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_status"
+                android:inputType="number"
+                android:key="battery_status"
+                android:persistent="true"
+                android:summary="Ex. 5 (CHARGING)"
+                android:title="Battery Status" />
+
+            <!--BATTERY ADAPTOR-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_adaptor"
+                android:persistent="true"
+                android:title="Inject Battery Adaptor?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_adaptor"
+                android:inputType="number"
+                android:key="battery_adaptor"
+                android:persistent="true"
+                android:summary="Ex. 2"
+                android:title="Battery Adaptor" />
+
+            <!--BATTERY VOLTAGE-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_voltage"
+                android:persistent="true"
+                android:title="Inject Battery Voltage?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_voltage"
+                android:inputType="number"
+                android:key="battery_voltage"
+                android:persistent="true"
+                android:summary="Ex. 4365 volts"
+                android:title="Battery Voltage" />
+
+            <!--BATTERY TEMPERATURE-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_temperature"
+                android:persistent="true"
+                android:title="Inject Battery Temperature?" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="q_battery_temperature"
+                android:inputType="number"
+                android:key="battery_voltage"
+                android:persistent="true"
+                android:summary="Ex. 32 F"
+                android:title="Battery Temperature" />
+
+            <!--BATTERY TECHNOLOGY-->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="bad_inject"
+                android:key="q_battery_technology"
+                android:persistent="true"
+                android:title="Inject Battery Technology?" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:dependency="q_battery_technology"
+                android:inputType="text"
+                android:key="battery_voltage"
+                android:persistent="true"
+                android:summary="Ex. Li-ion"
+                android:title="Battery Technology" />
+
 
         </PreferenceScreen>
         <PreferenceScreen

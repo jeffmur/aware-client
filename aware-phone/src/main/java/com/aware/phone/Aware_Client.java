@@ -63,6 +63,12 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
         prefs = getSharedPreferences("com.aware.phone", Context.MODE_PRIVATE);
         addPreferencesFromResource(R.xml.aware_preferences);
 
+        if(Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true"))
+        {
+            setTheme(R.style.Theme_BadActor);
+            setContentView(R.layout.bad_ui);
+        }
+
         optionalSensors.put(Aware_Preferences.STATUS_ACCELEROMETER, Sensor.TYPE_ACCELEROMETER);
         optionalSensors.put(Aware_Preferences.STATUS_SIGNIFICANT_MOTION, Sensor.TYPE_ACCELEROMETER);
         optionalSensors.put(Aware_Preferences.STATUS_BAROMETER, Sensor.TYPE_PRESSURE);
