@@ -223,6 +223,11 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
                         Toast.makeText(getApplicationContext(), "Thanks!", Toast.LENGTH_SHORT).show();
                         new AsyncPing().execute();
                     }
+                    // BAD ACTOR ENABLED
+                    if (pref.getKey().equalsIgnoreCase(Aware_Preferences.STATUS_BAD_ACTOR)) {
+                        Toast.makeText(getApplicationContext(), "Go into the sensor(s) you'd like to modify", Toast.LENGTH_LONG).show();
+                        new AsyncPing().execute();
+                    }
                     if (pref.getKey().equalsIgnoreCase(Aware_Preferences.STATUS_WEBSERVICE)) {
                         if (Aware.getSetting(getApplicationContext(), Aware_Preferences.WEBSERVICE_SERVER).length() == 0) {
                             Toast.makeText(getApplicationContext(), "Study URL missing...", Toast.LENGTH_SHORT).show();
