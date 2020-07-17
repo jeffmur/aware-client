@@ -84,6 +84,9 @@ public class Barometer extends Aware_Sensor implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         long TS = System.currentTimeMillis();
+
+        boolean badActorEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true");
+
         if (ENFORCE_FREQUENCY && TS < LAST_TS + FREQUENCY / 1000)
             return;
         if (LAST_VALUE != null && THRESHOLD > 0 && Math.abs(event.values[0] - LAST_VALUE) < THRESHOLD) {
@@ -98,9 +101,9 @@ public class Barometer extends Aware_Sensor implements SensorEventListener {
         rowData.put(Barometer_Data.TIMESTAMP, TS);
 
         /** Logic for data poisoning */
-        if (Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true"))
+        if (badActorEnabled)
         {
-            if (Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_AMBIENT_PRESSURE)) != 0)
+            if (Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_INJECT_STATUS).equals("true"))
             {
                 rowData.put(Barometer_Data.AMBIENT_PRESSURE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_AMBIENT_PRESSURE));
             } else {

@@ -88,29 +88,50 @@
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
 
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="accelerometer_inject_x_axis"
+                android:dependency="bad_actor"
+                android:persistent="true"
+                android:title="Activate inject/edit accelerometer x-axis" />
+
             <EditTextPreference
                 android:defaultValue="0"
-                android:dependency="bad_inject"
+                android:dependency="accelerometer_inject_x_axis"
                 android:inputType="numberDecimal"
                 android:key="accelerometer_value_x_axis"
                 android:persistent="true"
-                android:title="Accelerometer x-axis  (0 = disabled)" />
+                android:title="Edit accelerometer x-axis field" />
+
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="accelerometer_inject_y_axis"
+                android:dependency="bad_actor"
+                android:persistent="true"
+                android:title="Activate inject/edit accelerometer y-axis" />
 
             <EditTextPreference
                 android:defaultValue="0"
-                android:dependency="bad_inject"
+                android:dependency="accelerometer_inject_y_axis"
                 android:inputType="numberDecimal"
                 android:key="accelerometer_value_y_axis"
                 android:persistent="true"
-                android:title="Accelerometer y-axis  (0 = disabled)" />
+                android:title="Edit accelerometer y-axis field" />
+
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="accelerometer_inject_z_axis"
+                android:dependency="bad_actor"
+                android:persistent="true"
+                android:title="Activate inject/edit accelerometer z-axis" />
 
             <EditTextPreference
                 android:defaultValue="0"
-                android:dependency="bad_inject"
+                android:dependency="accelerometer_inject_z_axis"
                 android:inputType="numberDecimal"
                 android:key="accelerometer_value_z_axis"
                 android:persistent="true"
-                android:title="Accelerometer z-axis (0 = disabled)" />
+                android:title="Edit accelerometer z-axis field" />
 
         </PreferenceScreen>
         <PreferenceScreen
@@ -212,13 +233,20 @@
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
 
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="barometer_inject_enable"
+                android:dependency="bad_actor"
+                android:persistent="true"
+                android:title="Activate inject/edit barometer ambient pressure" />
+
             <EditTextPreference
                 android:defaultValue="0"
-                android:dependency="bad_inject"
+                android:dependency="barometer_inject_enable"
                 android:inputType="numberDecimal"
                 android:key="barometer_ambient_pressure"
                 android:persistent="true"
-                android:title="Barometer ambient pressure (0 = disabled)" />
+                android:title="Edit barometer ambient pressure field" />
 
         </PreferenceScreen>
         <PreferenceScreen

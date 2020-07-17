@@ -673,6 +673,10 @@ public class Aware_Preferences {
     public static final String STATUS_BAD_ACTOR = "bad_inject";
 
     /** Stores bad actor input for x, y, z axis of accelerometer sensor */
+    public static final String ACCELEROMETER_INJECT_STATUS_X_AXIS = "accelerometer_inject_x_axis";
+    public static final String ACCELEROMETER_INJECT_STATUS_Y_AXIS = "accelerometer_inject_y_axis";
+    public static final String ACCELEROMETER_INJECT_STATUS_Z_AXIS = "accelerometer_inject_z_axis";
+
     public static final String ACCELEROMETER_VALUE_X_AXIS = "accelerometer_value_x_axis";
     public static final String ACCELEROMETER_VALUE_Y_AXIS = "accelerometer_value_y_axis";
     public static final String ACCELEROMETER_VALUE_Z_AXIS = "accelerometer_value_z_axis";
@@ -688,5 +692,6 @@ public class Aware_Preferences {
     public static final String BATTERY_TEMP = "battery_temperature"; public static final String Q_BATTERY_TEMP = "q_battery_temperature";
 
     /** Stores bad actor input for barometer sensor pressure value */
+    public static final String BAROMETER_INJECT_STATUS = "barometer_inject_enable";
     public static final String BAROMETER_AMBIENT_PRESSURE = "barometer_ambient_pressure";
 }
