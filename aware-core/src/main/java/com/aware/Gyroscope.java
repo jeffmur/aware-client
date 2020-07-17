@@ -22,6 +22,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
+import com.aware.bad_actor.Bad_Actor;
 import com.aware.providers.Gyroscope_Provider;
 import com.aware.providers.Gyroscope_Provider.Gyroscope_Data;
 import com.aware.providers.Gyroscope_Provider.Gyroscope_Sensor;
@@ -137,11 +138,29 @@ public class Gyroscope extends Aware_Sensor implements SensorEventListener {
         ContentValues rowData = new ContentValues();
         rowData.put(Gyroscope_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Gyroscope_Data.TIMESTAMP, TS);
-        rowData.put(Gyroscope_Data.VALUES_0, event.values[0]);
-        rowData.put(Gyroscope_Data.VALUES_1, event.values[1]);
-        rowData.put(Gyroscope_Data.VALUES_2, event.values[2]);
         rowData.put(Gyroscope_Data.ACCURACY, event.accuracy);
         rowData.put(Gyroscope_Data.LABEL, LABEL);
+
+        //ybeltagy: bad actor called here todo: consider poisoning accuracy
+        if(Aware.getSetting(getApplicationContext(), Aware_Preferences.BAD_ACTOR_STATUS).equals("true")){
+
+            String bad_actor_mode = Aware.getSetting(getApplicationContext(), Aware_Preferences.BAD_ACTOR_MODE);
+            float realValue = event.values[0];
+            float presetValue = Float.parseFloat(Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_VALUE_0_AXIS));
+            rowData.put(Gyroscope_Data.VALUES_0, Bad_Actor.poisonData(bad_actor_mode, realValue, presetValue));
+
+            realValue = event.values[1];
+            presetValue = Float.parseFloat(Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_VALUE_1_AXIS));
+            rowData.put(Gyroscope_Data.VALUES_1, Bad_Actor.poisonData(bad_actor_mode, realValue, presetValue));
+
+            realValue = event.values[2];
+            presetValue = Float.parseFloat(Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_VALUE_2_AXIS));
+            rowData.put(Gyroscope_Data.VALUES_2, Bad_Actor.poisonData(bad_actor_mode, realValue, presetValue));
+        }else{
+            rowData.put(Gyroscope_Data.VALUES_0, event.values[0]);
+            rowData.put(Gyroscope_Data.VALUES_1, event.values[1]);
+            rowData.put(Gyroscope_Data.VALUES_2, event.values[2]);
+        }
 
         if (awareSensor != null) awareSensor.onGyroscopeChanged(rowData);
 

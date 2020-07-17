@@ -46,4 +46,14 @@
         <item>Fast (20ms)</item>
         <item>Fastest (0ms)</item>
     </string-array>
+    <string-array name="bad_modes_names">
+        <item>Preset Values</item>
+        <item>Random Values</item>
+        <item>Random Values between 1000 and 2000 (hard coded)</item>
+    </string-array>
+    <string-array name="bad_modes_values">
+        <item>preset</item>
+        <item>random</item>
+        <item>random_1000_2000</item>
+    </string-array>
 </resources>

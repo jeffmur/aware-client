@@ -26,7 +26,6 @@ import com.aware.providers.Accelerometer_Provider;
 import com.aware.providers.Accelerometer_Provider.Accelerometer_Data;
 import com.aware.providers.Accelerometer_Provider.Accelerometer_Sensor;
 import com.aware.utils.Aware_Sensor;
-import com.aware.utils.DatabaseHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -125,7 +124,7 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
         ContentValues rowData = new ContentValues();
         rowData.put(Accelerometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Accelerometer_Data.TIMESTAMP, TS);
-        if (Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true"))
+        if (Aware.getSetting(getApplicationContext(), Aware_Preferences.BAD_ACTOR_STATUS).equals("true"))
         {
             if (Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS)) != 0) {
                 rowData.put(Accelerometer_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS));
@@ -159,7 +158,7 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
                 JSONObject data = new JSONObject();
                 data.put(Accelerometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
                 data.put(Accelerometer_Data.TIMESTAMP, TS);
-                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true")) {
+                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.BAD_ACTOR_STATUS).equals("true")) {
                     data.put(Accelerometer_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS));
                     data.put(Accelerometer_Data.VALUES_1, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Y_AXIS));
                     data.put(Accelerometer_Data.VALUES_2, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Z_AXIS));

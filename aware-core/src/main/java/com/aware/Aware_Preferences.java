@@ -670,7 +670,8 @@ public class Aware_Preferences {
      *Preferences for bad actor fork
      ****************************************************************************************/
     /** bad actor enable */
-    public static final String STATUS_BAD_ACTOR = "bad_inject";
+    public static final String BAD_ACTOR_STATUS = "bad_inject";
+    public static final String BAD_ACTOR_MODE = "bad_actor_mode";
 
     /** Stores bad actor input for x, y, z axis of accelerometer sensor */
     public static final String ACCELEROMETER_VALUE_X_AXIS = "accelerometer_value_x_axis";
@@ -679,4 +680,14 @@ public class Aware_Preferences {
 
     /** Stores bad actor input for barometer sensor pressure value */
     public static final String BAROMETER_AMBIENT_PRESSURE = "barometer_ambient_pressure";
+
+    /** Stores bad actor input for x, y, z axis of gyroscope sensor */
+    public static final String GYROSCOPE_VALUE_0_AXIS = "gyroscope_value_0_axis";
+    public static final String GYROSCOPE_VALUE_1_AXIS = "gyroscope_value_1_axis";
+    public static final String GYROSCOPE_VALUE_2_AXIS = "gyroscope_value_2_axis";
+
+    /** Stores bad actor input for x, y, z axis of gyroscope sensor */
+    public static final String LIGHT_VALUE = "light_value";
+
+
 }

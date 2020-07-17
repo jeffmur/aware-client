@@ -22,6 +22,8 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
+import com.aware.bad_actor.Bad_Actor;
+import com.aware.providers.Gyroscope_Provider;
 import com.aware.providers.Light_Provider;
 import com.aware.providers.Light_Provider.Light_Data;
 import com.aware.providers.Light_Provider.Light_Sensor;
@@ -108,9 +110,20 @@ public class Light extends Aware_Sensor implements SensorEventListener {
         ContentValues rowData = new ContentValues();
         rowData.put(Light_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Light_Data.TIMESTAMP, TS);
-        rowData.put(Light_Data.LIGHT_LUX, event.values[0]);
         rowData.put(Light_Data.ACCURACY, event.accuracy);
         rowData.put(Light_Data.LABEL, LABEL);
+
+        //ybeltagy: bad actor called here todo: consider poisoning accuracy
+        if(Aware.getSetting(getApplicationContext(), Aware_Preferences.BAD_ACTOR_STATUS).equals("true")){
+
+            String bad_actor_mode = Aware.getSetting(getApplicationContext(), Aware_Preferences.BAD_ACTOR_MODE);
+            float realValue = event.values[0];
+            float presetValue = Float.parseFloat(Aware.getSetting(getApplicationContext(), Aware_Preferences.LIGHT_VALUE));
+            rowData.put(Light_Data.LIGHT_LUX, Bad_Actor.poisonData(bad_actor_mode, realValue, presetValue));
+
+        }else{
+            rowData.put(Light_Data.LIGHT_LUX, event.values[0]);
+        }
 
         if (awareSensor != null) awareSensor.onLightChanged(rowData);
 
