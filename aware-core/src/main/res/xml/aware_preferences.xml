@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen   xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:nolesh="http://nolesh.com">
     android:key="aware_preferences"
     android:title="@string/app_name">
     <PreferenceCategory
@@ -233,9 +234,9 @@
                 android:title="Activate" />
 
             <!--BATTERY LEVEL-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_level"
                 android:persistent="true"
                 android:title="Inject Battery Level?" />
@@ -249,9 +250,9 @@
                 android:title="Battery Level" />
 
             <!--BATTERY SCALE-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_scale"
                 android:persistent="true"
                 android:title="Inject Battery Scale?" />
@@ -265,9 +266,9 @@
                 android:title="Battery Scale" />
 
             <!--BATTERY HEALTH-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_health"
                 android:persistent="true"
                 android:title="Inject Battery Health?" />
@@ -281,9 +282,9 @@
                 android:title="Battery Health" />
 
             <!--BATTERY STATUS-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_status"
                 android:persistent="true"
                 android:title="Inject Battery Status?" />
@@ -297,9 +298,9 @@
                 android:title="Battery Status" />
 
             <!--BATTERY ADAPTOR-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_adaptor"
                 android:persistent="true"
                 android:title="Inject Battery Adaptor?" />
@@ -313,9 +314,9 @@
                 android:title="Battery Adaptor" />
 
             <!--BATTERY VOLTAGE-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_voltage"
                 android:persistent="true"
                 android:title="Inject Battery Voltage?" />
@@ -329,9 +330,9 @@
                 android:title="Battery Voltage" />
 
             <!--BATTERY TEMPERATURE-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_temperature"
                 android:persistent="true"
                 android:title="Inject Battery Temperature?" />
@@ -345,9 +346,9 @@
                 android:title="Battery Temperature" />
 
             <!--BATTERY TECHNOLOGY-->
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
-                android:dependency="bad_inject"
+                nolesh:dependencies="bad_inject, status_battery"
                 android:key="q_battery_technology"
                 android:persistent="true"
                 android:title="Inject Battery Technology?" />
