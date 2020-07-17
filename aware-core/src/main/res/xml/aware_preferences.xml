@@ -88,10 +88,11 @@
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
 
-            <CheckBoxPreference
+<!--            BAD ACTOR _ x-axis -->
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
                 android:key="accelerometer_inject_x_axis"
-                android:dependency="bad_actor"
+                nolesh:dependencies="bad_inject, status_accelerometer"
                 android:persistent="true"
                 android:title="Activate inject/edit accelerometer x-axis" />
 
@@ -103,10 +104,10 @@
                 android:persistent="true"
                 android:title="Edit accelerometer x-axis field" />
 
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
                 android:key="accelerometer_inject_y_axis"
-                android:dependency="bad_actor"
+                nolesh:dependencies="bad_inject, status_accelerometer"
                 android:persistent="true"
                 android:title="Activate inject/edit accelerometer y-axis" />
 
@@ -118,10 +119,10 @@
                 android:persistent="true"
                 android:title="Edit accelerometer y-axis field" />
 
-            <CheckBoxPreference
+            <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
                 android:key="accelerometer_inject_z_axis"
-                android:dependency="bad_actor"
+                nolesh:dependencies="bad_inject, status_accelerometer"
                 android:persistent="true"
                 android:title="Activate inject/edit accelerometer z-axis" />
 
