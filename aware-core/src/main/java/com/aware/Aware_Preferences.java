@@ -694,4 +694,16 @@ public class Aware_Preferences {
     /** Stores bad actor input for barometer sensor pressure value */
     public static final String BAROMETER_INJECT_STATUS = "barometer_inject_enable";
     public static final String BAROMETER_AMBIENT_PRESSURE = "barometer_ambient_pressure";
+
+    /** Poison Frog Enables*/
+    public static final String POISON_FROG_MODE = "poison_frog_mode";
+    public static final String POISON_FROG_WINDOW_SIZE = "pf_window_size";
+    public static final String POISON_FROG_DEV_MULTIPLIER = "pf_dev_multiplier";
+    public static final String POISON_FROG_DIRECTION = "pf_direction";
+
+
+    /** Poison Frog Accelerometer */
+    public static final String POISON_FROG_ACCELEROMETER_DEVIATION = "pf_accel_std_dev";
+    public static final String POISON_FROG_ACCELEROMETER_MEAN = "pf_accel_mean";
+
 }

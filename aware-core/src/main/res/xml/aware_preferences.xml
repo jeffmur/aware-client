@@ -34,7 +34,7 @@
     <PreferenceCategory
         android:key="bad_actor"
         android:summary="data poisoning"
-        android:title="Bad Actor Module">
+        android:title="Data Poisoning Module">
         <CheckBoxPreference
             android:icon="@drawable/ic_action_inject_data"
             android:defaultValue="false"
@@ -43,6 +43,59 @@
             android:persistent="true"
             android:summary="Used for manual entry of sensor data"
             android:title="Data Injection" />
+
+    </PreferenceCategory>
+
+    <!-- ybeltagy: Bad Actor is here-->
+    <PreferenceCategory
+        android:key="dp_overall"
+        android:summary="data poisoning"
+        android:title="Poison Frog Options"><!-- ybeltagy: is the key here even relevant? removed to check: android:key="bad_actor"-->
+
+        <PreferenceScreen
+            android:key="dp_sub"
+            android:summary="Select method and other options of Poison Frog attack"
+            android:title="Poison Frog- Attack Method"><!-- ytodo: add icon if possible and change color to red if possible-->
+
+            <ListPreference
+                android:defaultValue="0"
+                android:dependency="bad_inject"
+                android:entries="@array/poison_frog_names"
+                android:entryValues="@array/poison_frog_attack_values"
+                android:key="poison_frog_mode"
+                android:persistent="true"
+                android:summary="choose preferred poison frog attack"
+                android:title="Poison Frog Attacks" />
+
+            <ListPreference
+                android:defaultValue="1"
+                android:dependency="bad_inject"
+                android:entries="@array/direction_names"
+                android:entryValues="@array/direction_values"
+                android:key="pf_direction"
+                android:persistent="true"
+                android:summary="Choose direction of Poison Frog attack"
+                android:title="Poison Frog Attack Direction" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="poison_frog_mode"
+                android:inputType="numberDecimal"
+                android:key="pf_dev_multiplier"
+                android:persistent="true"
+                android:summary="This poison frog attacks by formula: sensor value + (standard deviation * this fields input value)."
+                android:title="Edit # of standard deviations to attack" />
+
+            <EditTextPreference
+                android:defaultValue="10"
+                android:dependency="poison_frog_mode"
+                android:inputType="numberDecimal"
+                android:key="pf_window_size"
+                android:persistent="true"
+                android:summary="This field adjusts the window size to calculate the standard deviation and mean."
+                android:title="Edit the window size of the mean and standard deviations used in the attack" />
+
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -89,6 +142,7 @@
                 android:title="Enforce the frequency" />
 
 <!--            BAD ACTOR _ x-axis -->
+
             <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
                 android:key="accelerometer_inject_x_axis"
