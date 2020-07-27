@@ -673,7 +673,6 @@
                 android:persistent="true"
                 android:title="Edit gyroscope z-axis field" />
 
-
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_locations"
@@ -829,6 +828,53 @@
                 android:persistent="true"
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
+
+            <!--            BAD ACTOR _ x-axis -->
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="linear_accelerometer_inject_x_axis"
+                nolesh:dependencies="bad_inject, status_linear_accelerometer"
+                android:persistent="true"
+                android:title="Activate inject/edit linear_accelerometer x-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="linear_accelerometer_inject_x_axis"
+                android:inputType="numberDecimal"
+                android:key="linear_accelerometer_value_x_axis"
+                android:persistent="true"
+                android:title="Edit linear_accelerometer x-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="linear_accelerometer_inject_y_axis"
+                nolesh:dependencies="bad_inject, status_linear_accelerometer"
+                android:persistent="true"
+                android:title="Activate inject/edit linear_accelerometer y-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="linear_accelerometer_inject_y_axis"
+                android:inputType="numberDecimal"
+                android:key="linear_accelerometer_value_y_axis"
+                android:persistent="true"
+                android:title="Edit linear_accelerometer y-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="linear_accelerometer_inject_z_axis"
+                nolesh:dependencies="bad_inject, status_linear_accelerometer"
+                android:persistent="true"
+                android:title="Activate inject/edit linear_accelerometer z-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="linear_accelerometer_inject_z_axis"
+                android:inputType="numberDecimal"
+                android:key="linear_accelerometer_value_z_axis"
+                android:persistent="true"
+                android:title="Edit linear_accelerometer z-axis field" />
 
         </PreferenceScreen>
         <PreferenceScreen
