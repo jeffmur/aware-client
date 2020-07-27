@@ -681,6 +681,25 @@ public class Aware_Preferences {
     public static final String ACCELEROMETER_VALUE_Y_AXIS = "accelerometer_value_y_axis";
     public static final String ACCELEROMETER_VALUE_Z_AXIS = "accelerometer_value_z_axis";
 
+    /** Stores bad actor input for x, y, z axis of Gravity sensor*/
+    public static final String GRAVITY_INJECT_STATUS_X_AXIS = "gravity_inject_x_axis";
+    public static final String GRAVITY_INJECT_STATUS_Y_AXIS = "gravity_inject_y_axis";
+    public static final String GRAVITY_INJECT_STATUS_Z_AXIS = "gravity_inject_z_axis";
+
+    public static final String GRAVITY_VALUE_X_AXIS = "gravity_value_x_axis";
+    public static final String GRAVITY_VALUE_Y_AXIS = "gravity_value_y_axis";
+    public static final String GRAVITY_VALUE_Z_AXIS = "gravity_value_z_axis";
+
+    /** Stores bad actor input for x, y, z axis of Gyroscope sensor*/
+    public static final String GYROSCOPE_INJECT_STATUS_X_AXIS = "gyroscope_inject_x_axis";
+    public static final String GYROSCOPE_INJECT_STATUS_Y_AXIS = "gyroscope_inject_y_axis";
+    public static final String GYROSCOPE_INJECT_STATUS_Z_AXIS = "gyroscope_inject_z_axis";
+
+    public static final String GYROSCOPE_VALUE_X_AXIS = "gyroscope_value_x_axis";
+    public static final String GYROSCOPE_VALUE_Y_AXIS = "gyroscope_value_y_axis";
+    public static final String GYROSCOPE_VALUE_Z_AXIS = "gyroscope_value_z_axis";
+
+
     /**         Stores bad actor input for battery measurement -> to equivalent -> Boolean Key (Question)         */
     public static final String BATTERY_LEVEL = "battery_level"; public static final String Q_BATTERY_LEVEL = "q_battery_level";
     public static final String BATTERY_SCALE = "battery_scale"; public static final String Q_BATTERY_SCALE = "q_battery_scale";

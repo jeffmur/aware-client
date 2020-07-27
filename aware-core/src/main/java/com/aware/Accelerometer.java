@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.aware.bad_actor.Bad_Actor;
 
 /**
  * AWARE Accelerometer module
@@ -96,7 +95,7 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
+        /** for bad actor */
         boolean badActorEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true");
         int frog_attack_type = Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE));
 
