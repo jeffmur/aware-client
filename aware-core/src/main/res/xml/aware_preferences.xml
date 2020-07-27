@@ -936,6 +936,53 @@
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
 
+            <!--            BAD ACTOR _ x-axis -->
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="magnetometer_inject_x_axis"
+                nolesh:dependencies="bad_inject, status_magnetometer"
+                android:persistent="true"
+                android:title="Activate inject/edit magnetometer x-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="magnetometer_inject_x_axis"
+                android:inputType="numberDecimal"
+                android:key="magnetometer_value_x_axis"
+                android:persistent="true"
+                android:title="Edit magnetometer x-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="magnetometer_inject_y_axis"
+                nolesh:dependencies="bad_inject, status_magnetometer"
+                android:persistent="true"
+                android:title="Activate inject/edit magnetometer y-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="magnetometer_inject_y_axis"
+                android:inputType="numberDecimal"
+                android:key="magnetometer_value_y_axis"
+                android:persistent="true"
+                android:title="Edit magnetometer y-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="magnetometer_inject_z_axis"
+                nolesh:dependencies="bad_inject, status_magnetometer"
+                android:persistent="true"
+                android:title="Activate inject/edit magnetometer z-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="magnetometer_inject_z_axis"
+                android:inputType="numberDecimal"
+                android:key="magnetometer_value_z_axis"
+                android:persistent="true"
+                android:title="Edit magnetometer z-axis field" />
+
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_processor"

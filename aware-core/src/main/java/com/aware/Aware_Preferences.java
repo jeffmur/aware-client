@@ -708,6 +708,15 @@ public class Aware_Preferences {
     public static final String LINEAR_ACCELEROMETER_VALUE_Y_AXIS = "linear_accelerometer_value_y_axis";
     public static final String LINEAR_ACCELEROMETER_VALUE_Z_AXIS = "linear_accelerometer_value_z_axis";
 
+    /** Stores bad actor input for x, y, z axis of Magnetometer sensor*/
+    public static final String MAGNETOMETER_INJECT_STATUS_X_AXIS = "magnetometer_inject_x_axis";
+    public static final String MAGNETOMETER_INJECT_STATUS_Y_AXIS = "magnetometer_inject_y_axis";
+    public static final String MAGNETOMETER_INJECT_STATUS_Z_AXIS = "magnetometer_inject_z_axis";
+
+    public static final String MAGNETOMETER_VALUE_X_AXIS = "magnetometer_value_x_axis";
+    public static final String MAGNETOMETER_VALUE_Y_AXIS = "magnetometer_value_y_axis";
+    public static final String MAGNETOMETER_VALUE_Z_AXIS = "magnetometer_value_z_axis";
+
 
     /**         Stores bad actor input for battery measurement -> to equivalent -> Boolean Key (Question)         */
     public static final String BATTERY_LEVEL = "battery_level"; public static final String Q_BATTERY_LEVEL = "q_battery_level";
