@@ -44,6 +44,7 @@ public class Bad_Actor {
     /** constructor vars:
         axis_num = # of sensor axis: 1 or 3  */
     public Bad_Actor(int num_axis) {
+//        records.clear();
         axis = num_axis;
         records = new ArrayList<>(axis);
     }
@@ -130,7 +131,7 @@ public class Bad_Actor {
         }
     }
     /** Randomized attack method */
-    public static Double[] attack1() {
+    public Double[] attack1() {
         Double[] temp = new Double[axis];
         Random r = new Random();
         for (int i = 0; i < axis; i++) {
@@ -140,7 +141,7 @@ public class Bad_Actor {
     }
 
     /** Randomized attack that adds a random value in direction of attack to the last attack value*/
-    public static Double[] attack2() {
+    public Double[] attack2() {
         Double[] temp = new Double[axis];
         Random r = new Random();
         for (int i = 0; i < axis; i++) {
