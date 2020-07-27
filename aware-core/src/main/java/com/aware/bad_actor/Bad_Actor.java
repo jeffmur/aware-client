@@ -1,11 +1,9 @@
 package com.aware.bad_actor;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
-
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,16 +19,16 @@ public class Bad_Actor {
     public static final String PRESET_VALUE = "PRESET_VALUE";
 
     private static int axis = 1;
-//    private static Integer attack_type = 0;
+    private static Integer attack_type = 0;
     private static Integer window_size = 0;
-    private static Integer multiplier = 1;
-    private static Integer direction = 1;
+    private static Integer attack_direction = 1;
+    private static Double mult_dev = 1.;
 
     private static ArrayList<Double> previous_frog = new ArrayList<>();
 
-    //todo: possibly replace arraylist with SQL tables.
+    //todo: possibly replace arraylist with SQL tables for Bad Actor.
     /**
-     * Index position of stdDev and mean = to axis number 0-2 = x-z
+     * Index position of stdDev and mean = to axis number 0,1,2 = x,y,z
      */
     private static ArrayList<Double> stdDev = new ArrayList<>();
     private static ArrayList<Double> mean = new ArrayList<>();
@@ -40,29 +38,27 @@ public class Bad_Actor {
     private static ArrayList<ArrayList<Double>> records = new ArrayList<>();
 
 //  todo:
-//    private static final int update_interval = 10; //update statistics every 10 seconds or so.
+//    private static final int update_interval = 10; //update statistics every 10 seconds or user input.
 
-    public Bad_Actor() {
-    }
-
-
-    // constructor vars:
-    // axis_num = # of sensor axis: 1 or 3
-    // attack_type = populates with passed preference
-    // window size = sliding window size for std_dev and mean calcs, populated from preferences.
-    // direction = -1 or 1 to denote direction of attack.
-
+    /** constructor vars:
+        axis_num = # of sensor axis: 1 or 3  */
     public Bad_Actor(int num_axis) {
         axis = num_axis;
         records = new ArrayList<>(axis);
     }
 
+    /** updates class in case of new preference changes
+     *  Var: Application  context */
     private void updateContext(Context base) {
         context = base;
-//        attack_type = Integer.parseInt(Aware.getSetting(context, Aware_Preferences.POISON_FROG_MODE));
+        attack_type = Integer.parseInt(Aware.getSetting(context, Aware_Preferences.POISON_FROG_MODE));
         window_size = Integer.parseInt(Aware.getSetting(context, Aware_Preferences.POISON_FROG_WINDOW_SIZE));
-        multiplier = Integer.parseInt(Aware.getSetting(context, Aware_Preferences.POISON_FROG_DEV_MULTIPLIER));
-        direction = Integer.parseInt(Aware.getSetting(context, Aware_Preferences.POISON_FROG_DIRECTION));
+        mult_dev = Double.parseDouble(Aware.getSetting(context, Aware_Preferences.POISON_FROG_DEV_MULTIPLIER));
+        if(Aware.getSetting(context, Aware_Preferences.POISON_FROG_DIRECTION).equals("0")){
+            attack_direction = -1;
+        }else {
+            attack_direction = 1;
+        }
     }
 
     /**
@@ -71,7 +67,6 @@ public class Bad_Actor {
     public void updateMetrics(Context base, Float[] record) {
 
         updateContext(base);
-        String str = window_size.toString();
 
         if (records.isEmpty()) {
             for (int i = 0; i < axis; i++) {
@@ -79,7 +74,6 @@ public class Bad_Actor {
                 temp.add(new Double(record[i]));
                 previous_frog.add(new Double(record[i]));
                 records.add(i, temp);
-
             }
         } else {
             for (int i = 0; i < axis; i++) {
@@ -92,17 +86,19 @@ public class Bad_Actor {
                 }
             }
         }
+        //todo:  adjust the mean and StdDev method calls based on interval instead of during each sensor update.
         setMean();
         setStdDev();
     }
 
+    /** method used to reduce Data Arrays larger than window size */
     private void trim() {
         for (int i = 0; i < axis; i++) {
             records.get(i).remove(0);
         }
     }
 
-    //todo: thread this-- Intent?
+    //todo: thread this-- Intent? or alternative non-looping calculation.
     private static void setMean() {
         mean.clear();
         for (int i = 0; i < axis; i++) {
@@ -115,6 +111,7 @@ public class Bad_Actor {
         }
     }
 
+    //todo: thread this-- Intent? or alternative non-looping calculation.
     private static void setStdDev() {
         stdDev.clear();
         for (int i = 0; i < axis; i++) {
@@ -131,21 +128,22 @@ public class Bad_Actor {
             }
         }
     }
-
+    /** Randomized attack method */
     public static Double[] attack1() {
         Double[] temp = new Double[axis];
         Random r = new Random();
         for (int i = 0; i < axis; i++) {
-            temp[i] = r.nextGaussian() * (multiplier * stdDev.get(i)) + mean.get(i);
+            temp[i] = r.nextGaussian() * (mult_dev * stdDev.get(i)) + (attack_direction * mean.get(i));
         }
         return temp;
     }
 
+    /** Randomized attack that adds a random value in direction of attack to the last attack value*/
     public static Double[] attack2() {
         Double[] temp = new Double[axis];
         Random r = new Random();
         for (int i = 0; i < axis; i++) {
-            temp[i] = r.nextGaussian() * (multiplier * stdDev.get(i)) + (direction * previous_frog.get(i));
+            temp[i] = r.nextGaussian() * (mult_dev * stdDev.get(i)) + (attack_direction * previous_frog.get(i));
             previous_frog.set(i, temp[i]);
         }
         return temp;

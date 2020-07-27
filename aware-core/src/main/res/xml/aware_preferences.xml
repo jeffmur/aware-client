@@ -41,20 +41,13 @@
             android:dependency=""
             android:key="bad_inject"
             android:persistent="true"
-            android:summary="Used for manual entry of sensor data"
+            android:summary="1. Enable Data poisoning module                  2. Then adjust settings in Poison Frog - Attack Method below"
             android:title="Data Injection" />
-
-    </PreferenceCategory>
-
-    <!-- ybeltagy: Bad Actor is here-->
-    <PreferenceCategory
-        android:key="dp_overall"
-        android:summary="data poisoning"
-        android:title="Poison Frog Options"><!-- ybeltagy: is the key here even relevant? removed to check: android:key="bad_actor"-->
 
         <PreferenceScreen
             android:key="dp_sub"
-            android:summary="Select method and other options of Poison Frog attack"
+            android:icon="@drawable/ic_action_squashed_frog"
+            android:summary="1. Select method/options of Poison Frog attack               2. Then go to sensor and adjust sensor specific options"
             android:title="Poison Frog- Attack Method"><!-- ytodo: add icon if possible and change color to red if possible-->
 
             <ListPreference
@@ -78,7 +71,7 @@
                 android:title="Poison Frog Attack Direction" />
 
             <EditTextPreference
-                android:defaultValue="0"
+                android:defaultValue="1"
                 android:dependency="poison_frog_mode"
                 android:inputType="numberDecimal"
                 android:key="pf_dev_multiplier"
@@ -96,7 +89,17 @@
                 android:title="Edit the window size of the mean and standard deviations used in the attack" />
 
         </PreferenceScreen>
+
     </PreferenceCategory>
+
+<!--    &lt;!&ndash; ybeltagy: Bad Actor is here&ndash;&gt;-->
+<!--    <PreferenceCategory-->
+<!--        android:key="dp_overall"-->
+<!--        android:summary="data poisoning"-->
+<!--        android:title="Poison Frog Options">&lt;!&ndash; ybeltagy: is the key here even relevant? removed to check: android:key="bad_actor"&ndash;&gt;-->
+
+
+<!--    </PreferenceCategory>-->
 
     <PreferenceCategory
         android:key="sensors"

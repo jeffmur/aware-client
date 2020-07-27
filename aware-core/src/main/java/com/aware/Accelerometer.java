@@ -73,7 +73,11 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
     private List<ContentValues> data_values = new ArrayList<>();
 
     private static DataLabel dataLabeler = new DataLabel();
-    private Bad_Actor attacker = new Bad_Actor(3);
+
+    /** for bad actor*/
+    private static final int axis = 3;
+    private Bad_Actor attacker = new Bad_Actor(axis);
+    String[] labels = {"Accelerometer_Data.VALUES_0", "Accelerometer_Data.VALUES_1", "Accelerometer_Data.VALUES_2" };
 
     public static class DataLabel extends BroadcastReceiver {
         @Override
@@ -93,9 +97,6 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
 
         boolean badActorEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true");
-//        boolean poisonFrogManualEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE).equals("0");
-//        boolean poisonFrogRandomEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE).equals("1");
-//        boolean poisonFrogDistributedEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE).equals("2");
         int frog_attack_type = Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE));
 
 
@@ -140,8 +141,9 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
         rowData.put(Accelerometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Accelerometer_Data.TIMESTAMP, TS);
         if (badActorEnabled) {
+            /** Manual Input */
             if (frog_attack_type == 0) {
-//                Toast.makeText(getApplicationContext(), "poisonfrogattack = 0", Toast.LENGTH_SHORT).show();
+
                 if (Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_INJECT_STATUS_X_AXIS).equals("true")) {
                     rowData.put(Accelerometer_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS));
                 } else {
@@ -159,21 +161,21 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
                     rowData.put(Accelerometer_Data.VALUES_2, event.values[2]);
                 }
             }
+            /** Randomized attack */
             if (frog_attack_type == 1) {
                 attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
                 Double[] vals = attacker.attack1();
-                rowData.put(Accelerometer_Data.VALUES_0, vals[0]);
-                rowData.put(Accelerometer_Data.VALUES_1, vals[1]);
-                rowData.put(Accelerometer_Data.VALUES_2, vals[2]);
+                for(int i = 0; i < axis; i++){
+                    rowData.put(labels[i], vals[i]);
+                }
             }
-
+            /** Randomized Additive Attack */
             if (frog_attack_type == 2) {
-
                 attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
                 Double[] vals = attacker.attack2();
-                rowData.put(Accelerometer_Data.VALUES_0, vals[0]);
-                rowData.put(Accelerometer_Data.VALUES_1, vals[1]);
-                rowData.put(Accelerometer_Data.VALUES_2, vals[2]);
+                for(int i = 0; i < axis; i++){
+                    rowData.put(labels[i], vals[i]);
+                }
             }
 
         } else {
