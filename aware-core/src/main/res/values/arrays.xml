@@ -50,7 +50,7 @@
     <string-array name="poison_frog_names">
         <item>Poison Frog-Preset Values</item>
         <item>Poison Frog Attack-randomized</item>
-        <item>Poison Frog Attack (randomized within distribution)</item>
+        <item>Poison Frog Attack-randomized and Additive</item>
     </string-array>
 
     <string-array name="poison_frog_attack_values">

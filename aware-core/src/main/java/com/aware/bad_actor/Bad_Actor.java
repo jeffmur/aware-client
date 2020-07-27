@@ -8,6 +8,7 @@ import com.aware.Aware_Preferences;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -55,9 +56,9 @@ public class Bad_Actor {
         window_size = Integer.parseInt(Aware.getSetting(context, Aware_Preferences.POISON_FROG_WINDOW_SIZE));
         mult_dev = Double.parseDouble(Aware.getSetting(context, Aware_Preferences.POISON_FROG_DEV_MULTIPLIER));
         if(Aware.getSetting(context, Aware_Preferences.POISON_FROG_DIRECTION).equals("0")){
-            attack_direction = -1;
-        }else {
             attack_direction = 1;
+        }else {
+            attack_direction = -1;
         }
     }
 
@@ -133,7 +134,7 @@ public class Bad_Actor {
         Double[] temp = new Double[axis];
         Random r = new Random();
         for (int i = 0; i < axis; i++) {
-            temp[i] = r.nextGaussian() * (mult_dev * stdDev.get(i)) + (attack_direction * mean.get(i));
+            temp[i] = mean.get(i) + r.nextGaussian() * (attack_direction * mult_dev * stdDev.get(i));
         }
         return temp;
     }
@@ -143,7 +144,7 @@ public class Bad_Actor {
         Double[] temp = new Double[axis];
         Random r = new Random();
         for (int i = 0; i < axis; i++) {
-            temp[i] = r.nextGaussian() * (mult_dev * stdDev.get(i)) + (attack_direction * previous_frog.get(i));
+            temp[i] = previous_frog.get(i) + r.nextGaussian() * (attack_direction * mult_dev * stdDev.get(i));
             previous_frog.set(i, temp[i]);
         }
         return temp;

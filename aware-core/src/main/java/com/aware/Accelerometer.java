@@ -74,10 +74,11 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
 
     private static DataLabel dataLabeler = new DataLabel();
 
-    /** for bad actor*/
+    /**
+     * for bad actor
+     */
     private static final int axis = 3;
     private Bad_Actor attacker = new Bad_Actor(axis);
-    String[] labels = {"Accelerometer_Data.VALUES_0", "Accelerometer_Data.VALUES_1", "Accelerometer_Data.VALUES_2" };
 
     public static class DataLabel extends BroadcastReceiver {
         @Override
@@ -165,17 +166,17 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
             if (frog_attack_type == 1) {
                 attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
                 Double[] vals = attacker.attack1();
-                for(int i = 0; i < axis; i++){
-                    rowData.put(labels[i], vals[i]);
-                }
+                rowData.put(Accelerometer_Data.VALUES_0, vals[0]);
+                rowData.put(Accelerometer_Data.VALUES_1, vals[1]);
+                rowData.put(Accelerometer_Data.VALUES_2, vals[2]);
             }
             /** Randomized Additive Attack */
             if (frog_attack_type == 2) {
                 attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
                 Double[] vals = attacker.attack2();
-                for(int i = 0; i < axis; i++){
-                    rowData.put(labels[i], vals[i]);
-                }
+                rowData.put(Accelerometer_Data.VALUES_0, vals[0]);
+                rowData.put(Accelerometer_Data.VALUES_1, vals[1]);
+                rowData.put(Accelerometer_Data.VALUES_2, vals[2]);
             }
 
         } else {
@@ -193,28 +194,11 @@ public class Accelerometer extends Aware_Sensor implements SensorEventListener {
                 JSONObject data = new JSONObject();
                 data.put(Accelerometer_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
                 data.put(Accelerometer_Data.TIMESTAMP, TS);
-                if (badActorEnabled) {
-                    if (Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_INJECT_STATUS_X_AXIS).equals("true")) {
-                        data.put(Accelerometer_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_X_AXIS));
-                    } else {
-                        data.put(Accelerometer_Data.VALUES_0, event.values[0]);
-                    }
 
-                    if (Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_INJECT_STATUS_Y_AXIS).equals("true")) {
-                        data.put(Accelerometer_Data.VALUES_1, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Y_AXIS));
-                    } else {
-                        data.put(Accelerometer_Data.VALUES_1, event.values[1]);
-                    }
-                    if (Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_INJECT_STATUS_Z_AXIS).equals("true")) {
-                        data.put(Accelerometer_Data.VALUES_2, Aware.getSetting(getApplicationContext(), Aware_Preferences.ACCELEROMETER_VALUE_Z_AXIS));
-                    } else {
-                        data.put(Accelerometer_Data.VALUES_2, event.values[2]);
-                    }
-                } else {
-                    data.put(Accelerometer_Data.VALUES_0, event.values[0]);
-                    data.put(Accelerometer_Data.VALUES_1, event.values[1]);
-                    data.put(Accelerometer_Data.VALUES_2, event.values[2]);
-                }
+                data.put(Accelerometer_Data.VALUES_0, event.values[0]);
+                data.put(Accelerometer_Data.VALUES_1, event.values[1]);
+                data.put(Accelerometer_Data.VALUES_2, event.values[2]);
+
                 data.put(Accelerometer_Data.ACCURACY, event.accuracy);
                 data.put(Accelerometer_Data.LABEL, LABEL);
 

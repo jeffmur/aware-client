@@ -47,7 +47,7 @@
         <PreferenceScreen
             android:key="dp_sub"
             android:icon="@drawable/ic_action_squashed_frog"
-            android:summary="1. Select method/options of Poison Frog attack               2. Then go to sensor and adjust sensor specific options"
+            android:summary="1. Select method/options of Data Attack 2. Then go to sensor and adjust sensor specific options"
             android:title="Poison Frog- Attack Method"><!-- ytodo: add icon if possible and change color to red if possible-->
 
             <ListPreference
