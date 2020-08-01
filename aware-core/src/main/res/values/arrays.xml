@@ -48,7 +48,7 @@
     </string-array>
 
     <string-array name="poison_frog_names">
-        <item>Poison Frog-Preset Values</item>
+        <item>No Poison Frog Attack</item>
         <item>Poison Frog Attack-randomized</item>
         <item>Poison Frog Attack-randomized and Additive</item>
     </string-array>
