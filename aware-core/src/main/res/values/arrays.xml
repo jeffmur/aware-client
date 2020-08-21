@@ -46,4 +46,28 @@
         <item>Fast (20ms)</item>
         <item>Fastest (0ms)</item>
     </string-array>
+
+    <string-array name="poison_frog_names">
+        <item>No Poison Frog Attack</item>
+        <item>Poison Frog Attack-randomized</item>
+        <item>Poison Frog Attack-randomized and Additive</item>
+    </string-array>
+
+    <string-array name="poison_frog_attack_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+
+    <string-array name="direction_names">
+        <item>Increasing</item>
+        <item>Decreasing</item>
+    </string-array>
+
+    <string-array name="direction_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
 </resources>

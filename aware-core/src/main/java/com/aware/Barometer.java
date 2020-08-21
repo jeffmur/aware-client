@@ -22,11 +22,11 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
-import com.aware.providers.Accelerometer_Provider;
 import com.aware.providers.Barometer_Provider;
 import com.aware.providers.Barometer_Provider.Barometer_Data;
 import com.aware.providers.Barometer_Provider.Barometer_Sensor;
 import com.aware.utils.Aware_Sensor;
+import com.aware.bad_actor.Bad_Actor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +67,12 @@ public class Barometer extends Aware_Sensor implements SensorEventListener {
     private static String LABEL = "";
     private static DataLabel dataLabeler = new DataLabel();
 
+    /**
+     * for bad actor
+     */
+    private static final int axis = 1;
+    private Bad_Actor attacker = new Bad_Actor(1);
+
     public static class DataLabel extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -85,7 +91,10 @@ public class Barometer extends Aware_Sensor implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         long TS = System.currentTimeMillis();
 
+        /** for Bad Actor */
         boolean badActorEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true");
+        int frog_attack_type = Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE));
+        Float[] LAST_VALUES = new Float[]{event.values[0]};
 
         if (ENFORCE_FREQUENCY && TS < LAST_TS + FREQUENCY / 1000)
             return;
@@ -101,14 +110,29 @@ public class Barometer extends Aware_Sensor implements SensorEventListener {
         rowData.put(Barometer_Data.TIMESTAMP, TS);
 
         /** Logic for data poisoning */
-        if (badActorEnabled)
-        {
-            if (Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_INJECT_STATUS).equals("true"))
-            {
-                rowData.put(Barometer_Data.AMBIENT_PRESSURE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_AMBIENT_PRESSURE));
-            } else {
-                rowData.put(Barometer_Data.AMBIENT_PRESSURE, event.values[0]);
+        if (badActorEnabled) {
+            /** Manual Input */
+            if (frog_attack_type == 0) {
+                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_INJECT_STATUS).equals("true")) {
+                    rowData.put(Barometer_Data.AMBIENT_PRESSURE, Aware.getSetting(getApplicationContext(), Aware_Preferences.BAROMETER_AMBIENT_PRESSURE));
+                } else {
+                    rowData.put(Barometer_Data.AMBIENT_PRESSURE, event.values[0]);
+                }
             }
+
+            /** Randomized attack */
+            if (frog_attack_type == 1) {
+                attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
+                Double[] vals = attacker.attack1();
+                rowData.put(Barometer_Data.AMBIENT_PRESSURE, vals[0]);
+            }
+            /** Randomized Additive Attack */
+            if (frog_attack_type == 2) {
+                attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
+                Double[] vals = attacker.attack2();
+                rowData.put(Barometer_Data.AMBIENT_PRESSURE, vals[0]);
+            }
+
         } else {
             rowData.put(Barometer_Data.AMBIENT_PRESSURE, event.values[0]);
         }

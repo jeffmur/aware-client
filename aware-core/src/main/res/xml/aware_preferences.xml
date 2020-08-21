@@ -34,16 +34,72 @@
     <PreferenceCategory
         android:key="bad_actor"
         android:summary="data poisoning"
-        android:title="Bad Actor Module">
+        android:title="Data Poisoning Module">
         <CheckBoxPreference
             android:icon="@drawable/ic_action_inject_data"
             android:defaultValue="false"
             android:dependency=""
             android:key="bad_inject"
             android:persistent="true"
-            android:summary="Used for manual entry of sensor data"
+            android:summary="1. Enable Data poisoning module                  2. Then adjust settings in Poison Frog - Attack Method below"
             android:title="Data Injection" />
+
+        <PreferenceScreen
+            android:key="dp_sub"
+            android:icon="@drawable/ic_action_squashed_frog"
+            android:summary="1. Select method/options of Data Attack 2. Then go to sensor and adjust sensor specific options"
+            android:title="Poison Frog- Attack Method"><!-- ytodo: add icon if possible and change color to red if possible-->
+
+            <ListPreference
+                android:defaultValue="0"
+                android:dependency="bad_inject"
+                android:entries="@array/poison_frog_names"
+                android:entryValues="@array/poison_frog_attack_values"
+                android:key="poison_frog_mode"
+                android:persistent="true"
+                android:summary="choose preferred poison frog attack"
+                android:title="Poison Frog Attacks" />
+
+            <ListPreference
+                android:defaultValue="1"
+                android:dependency="bad_inject"
+                android:entries="@array/direction_names"
+                android:entryValues="@array/direction_values"
+                android:key="pf_direction"
+                android:persistent="true"
+                android:summary="Choose direction of Poison Frog attack"
+                android:title="Poison Frog Attack Direction" />
+
+            <EditTextPreference
+                android:defaultValue="1"
+                android:dependency="poison_frog_mode"
+                android:inputType="numberDecimal"
+                android:key="pf_dev_multiplier"
+                android:persistent="true"
+                android:summary="This poison frog attacks by formula: sensor value + (standard deviation * this fields input value)."
+                android:title="Edit # of standard deviations to attack" />
+
+            <EditTextPreference
+                android:defaultValue="10"
+                android:dependency="poison_frog_mode"
+                android:inputType="numberDecimal"
+                android:key="pf_window_size"
+                android:persistent="true"
+                android:summary="This field adjusts the window size to calculate the standard deviation and mean."
+                android:title="Edit the window size of the mean and standard deviations used in the attack" />
+
+        </PreferenceScreen>
+
     </PreferenceCategory>
+
+<!--    &lt;!&ndash; ybeltagy: Bad Actor is here&ndash;&gt;-->
+<!--    <PreferenceCategory-->
+<!--        android:key="dp_overall"-->
+<!--        android:summary="data poisoning"-->
+<!--        android:title="Poison Frog Options">&lt;!&ndash; ybeltagy: is the key here even relevant? removed to check: android:key="bad_actor"&ndash;&gt;-->
+
+
+<!--    </PreferenceCategory>-->
 
     <PreferenceCategory
         android:key="sensors"
@@ -89,6 +145,7 @@
                 android:title="Enforce the frequency" />
 
 <!--            BAD ACTOR _ x-axis -->
+
             <com.aware.MultiDependencyCheckboxPrereference
                 android:defaultValue="false"
                 android:key="accelerometer_inject_x_axis"
@@ -483,6 +540,53 @@
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
 
+            <!--            BAD ACTOR _ x-axis -->
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="gravity_inject_x_axis"
+                nolesh:dependencies="bad_inject, status_gravity"
+                android:persistent="true"
+                android:title="Activate inject/edit gravity x-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="gravity_inject_x_axis"
+                android:inputType="numberDecimal"
+                android:key="gravity_value_x_axis"
+                android:persistent="true"
+                android:title="Edit gravity x-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="gravity_inject_y_axis"
+                nolesh:dependencies="bad_inject, status_gravity"
+                android:persistent="true"
+                android:title="Activate inject/edit gravity y-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="gravity_inject_y_axis"
+                android:inputType="numberDecimal"
+                android:key="gravity_value_y_axis"
+                android:persistent="true"
+                android:title="Edit gravity y-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="gravity_inject_z_axis"
+                nolesh:dependencies="bad_inject, status_gravity"
+                android:persistent="true"
+                android:title="Activate inject/edit gravity z-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="gravity_inject_z_axis"
+                android:inputType="numberDecimal"
+                android:key="gravity_value_z_axis"
+                android:persistent="true"
+                android:title="Edit gravity z-axis field" />
+
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_gyroscope"
@@ -521,6 +625,53 @@
                 android:persistent="true"
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
+
+            <!--            BAD ACTOR _ x-axis -->
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="gyroscope_inject_x_axis"
+                nolesh:dependencies="bad_inject, status_gyroscope"
+                android:persistent="true"
+                android:title="Activate inject/edit gyroscope x-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="gyroscope_inject_x_axis"
+                android:inputType="numberDecimal"
+                android:key="gyroscope_value_x_axis"
+                android:persistent="true"
+                android:title="Edit gyroscope x-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="gyroscope_inject_y_axis"
+                nolesh:dependencies="bad_inject, status_gyroscope"
+                android:persistent="true"
+                android:title="Activate inject/edit gyroscope y-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="gyroscope_inject_y_axis"
+                android:inputType="numberDecimal"
+                android:key="gyroscope_value_y_axis"
+                android:persistent="true"
+                android:title="Edit gyroscope y-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="gyroscope_inject_z_axis"
+                nolesh:dependencies="bad_inject, status_gyroscope"
+                android:persistent="true"
+                android:title="Activate inject/edit gyroscope z-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="gyroscope_inject_z_axis"
+                android:inputType="numberDecimal"
+                android:key="gyroscope_value_z_axis"
+                android:persistent="true"
+                android:title="Edit gyroscope z-axis field" />
 
         </PreferenceScreen>
         <PreferenceScreen
@@ -678,6 +829,53 @@
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
 
+            <!--            BAD ACTOR _ x-axis -->
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="linear_accelerometer_inject_x_axis"
+                nolesh:dependencies="bad_inject, status_linear_accelerometer"
+                android:persistent="true"
+                android:title="Activate inject/edit linear_accelerometer x-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="linear_accelerometer_inject_x_axis"
+                android:inputType="numberDecimal"
+                android:key="linear_accelerometer_value_x_axis"
+                android:persistent="true"
+                android:title="Edit linear_accelerometer x-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="linear_accelerometer_inject_y_axis"
+                nolesh:dependencies="bad_inject, status_linear_accelerometer"
+                android:persistent="true"
+                android:title="Activate inject/edit linear_accelerometer y-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="linear_accelerometer_inject_y_axis"
+                android:inputType="numberDecimal"
+                android:key="linear_accelerometer_value_y_axis"
+                android:persistent="true"
+                android:title="Edit linear_accelerometer y-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="linear_accelerometer_inject_z_axis"
+                nolesh:dependencies="bad_inject, status_linear_accelerometer"
+                android:persistent="true"
+                android:title="Activate inject/edit linear_accelerometer z-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="linear_accelerometer_inject_z_axis"
+                android:inputType="numberDecimal"
+                android:key="linear_accelerometer_value_z_axis"
+                android:persistent="true"
+                android:title="Edit linear_accelerometer z-axis field" />
+
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/ic_action_network"
@@ -737,6 +935,53 @@
                 android:persistent="true"
                 android:summary="If Android gives points more often than frequency, ignore them."
                 android:title="Enforce the frequency" />
+
+            <!--            BAD ACTOR _ x-axis -->
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="magnetometer_inject_x_axis"
+                nolesh:dependencies="bad_inject, status_magnetometer"
+                android:persistent="true"
+                android:title="Activate inject/edit magnetometer x-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="magnetometer_inject_x_axis"
+                android:inputType="numberDecimal"
+                android:key="magnetometer_value_x_axis"
+                android:persistent="true"
+                android:title="Edit magnetometer x-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="magnetometer_inject_y_axis"
+                nolesh:dependencies="bad_inject, status_magnetometer"
+                android:persistent="true"
+                android:title="Activate inject/edit magnetometer y-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="magnetometer_inject_y_axis"
+                android:inputType="numberDecimal"
+                android:key="magnetometer_value_y_axis"
+                android:persistent="true"
+                android:title="Edit magnetometer y-axis field" />
+
+            <com.aware.MultiDependencyCheckboxPrereference
+                android:defaultValue="false"
+                android:key="magnetometer_inject_z_axis"
+                nolesh:dependencies="bad_inject, status_magnetometer"
+                android:persistent="true"
+                android:title="Activate inject/edit magnetometer z-axis" />
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="magnetometer_inject_z_axis"
+                android:inputType="numberDecimal"
+                android:key="magnetometer_value_z_axis"
+                android:persistent="true"
+                android:title="Edit magnetometer z-axis field" />
 
         </PreferenceScreen>
         <PreferenceScreen
