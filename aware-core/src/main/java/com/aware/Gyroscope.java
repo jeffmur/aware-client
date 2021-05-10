@@ -22,10 +22,12 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
+import com.aware.providers.Accelerometer_Provider;
 import com.aware.providers.Gyroscope_Provider;
 import com.aware.providers.Gyroscope_Provider.Gyroscope_Data;
 import com.aware.providers.Gyroscope_Provider.Gyroscope_Sensor;
 import com.aware.utils.Aware_Sensor;
+import com.aware.bad_actor.Bad_Actor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,13 @@ public class Gyroscope extends Aware_Sensor implements SensorEventListener {
 
     private static DataLabel dataLabeler = new DataLabel();
 
+    /**
+     * for bad actor
+     */
+    private static final int axis = 3;
+    private Bad_Actor attacker = new Bad_Actor(axis);
+
+
     public static class DataLabel extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -95,6 +104,10 @@ public class Gyroscope extends Aware_Sensor implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        /** for bad actor */
+        boolean badActorEnabled = Aware.getSetting(getApplicationContext(), Aware_Preferences.STATUS_BAD_ACTOR).equals("true");
+        int frog_attack_type = Integer.parseInt(Aware.getSetting(getApplicationContext(), Aware_Preferences.POISON_FROG_MODE));
+
         if (SignificantMotion.isSignificantMotionActive && !SignificantMotion.CURRENT_SIGMOTION_STATE) {
             if (data_values.size() > 0) {
                 final ContentValues[] data_buffer = new ContentValues[data_values.size()];
@@ -137,9 +150,51 @@ public class Gyroscope extends Aware_Sensor implements SensorEventListener {
         ContentValues rowData = new ContentValues();
         rowData.put(Gyroscope_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
         rowData.put(Gyroscope_Data.TIMESTAMP, TS);
-        rowData.put(Gyroscope_Data.VALUES_0, event.values[0]);
-        rowData.put(Gyroscope_Data.VALUES_1, event.values[1]);
-        rowData.put(Gyroscope_Data.VALUES_2, event.values[2]);
+
+        if (badActorEnabled) {
+            /** Manual Input */
+            if (frog_attack_type == 0) {
+
+                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_INJECT_STATUS_X_AXIS).equals("true")) {
+                    rowData.put(Gyroscope_Data.VALUES_0, Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_VALUE_X_AXIS));
+                } else {
+                    rowData.put(Gyroscope_Data.VALUES_0, event.values[0]);
+                }
+
+                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_INJECT_STATUS_Y_AXIS).equals("true")) {
+                    rowData.put(Gyroscope_Data.VALUES_1, Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_VALUE_Y_AXIS));
+                } else {
+                    rowData.put(Gyroscope_Data.VALUES_1, event.values[1]);
+                }
+                if (Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_INJECT_STATUS_Z_AXIS).equals("true")) {
+                    rowData.put(Gyroscope_Data.VALUES_2, Aware.getSetting(getApplicationContext(), Aware_Preferences.GYROSCOPE_VALUE_Z_AXIS));
+                } else {
+                    rowData.put(Gyroscope_Data.VALUES_2, event.values[2]);
+                }
+            }
+            /** Randomized attack */
+            if (frog_attack_type == 1) {
+                attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
+                Double[] vals = attacker.attack1();
+                rowData.put(Gyroscope_Data.VALUES_0, vals[0]);
+                rowData.put(Gyroscope_Data.VALUES_1, vals[1]);
+                rowData.put(Gyroscope_Data.VALUES_2, vals[2]);
+            }
+            /** Randomized Additive Attack */
+            if (frog_attack_type == 2) {
+                attacker.updateMetrics(getApplicationContext(), LAST_VALUES);
+                Double[] vals = attacker.attack2();
+                rowData.put(Gyroscope_Data.VALUES_0, vals[0]);
+                rowData.put(Gyroscope_Data.VALUES_1, vals[1]);
+                rowData.put(Gyroscope_Data.VALUES_2, vals[2]);
+            }
+
+        } else {
+            rowData.put(Gyroscope_Data.VALUES_0, event.values[0]);
+            rowData.put(Gyroscope_Data.VALUES_1, event.values[1]);
+            rowData.put(Gyroscope_Data.VALUES_2, event.values[2]);
+        }
+
         rowData.put(Gyroscope_Data.ACCURACY, event.accuracy);
         rowData.put(Gyroscope_Data.LABEL, LABEL);
 
